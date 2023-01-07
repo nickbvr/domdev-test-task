@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Todo } from '../Todo';
 import { Itodo } from '../../types';
 import { TodosWrapper } from './TodoList.styles';
@@ -8,10 +8,6 @@ interface TodoProps {
 }
 
 const TodoList: FC<TodoProps> = ({ todos }) => {
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }, [todos]);
-
     return (
         <TodosWrapper>
             {todos.map((todo) => (
