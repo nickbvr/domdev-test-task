@@ -7,33 +7,35 @@ interface todosState {
 }
 
 const initialState: todosState = {
-    todos: JSON.parse(localStorage.getItem('todos') as string) || [],
+    todos: [],
 };
 
 export const todoSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        addTodo: (state, action: PayloadAction<string>) => {
+        addTodo: (state, action: PayloadAction<{ value: string }>) => {
             state.todos = [
                 ...state.todos,
                 {
                     id: Date.now(),
-                    text: action.payload,
+                    text: action.payload.value,
                     completed: false,
                 },
             ];
         },
-        removeTodo: (state, action: PayloadAction<number>) => {
-            state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+        removeTodo: (state, action: PayloadAction<{ id: number }>) => {
+            state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
         },
-        toggleComplete: (state, action: PayloadAction<{ id: number; completed: boolean }>) => {
-            const todo = state.todos.find((todo) => todo.id === action.payload.id);
-            if (todo) todo.completed = action.payload.completed;
+        toggleComplete: (state, action: PayloadAction<{ id: number }>) => {
+            state.todos = state.todos.map((todo) =>
+                todo.id === action.payload.id ? { ...todo, completed: !todo.completed } : todo,
+            );
         },
         updateTodo: (state, action: PayloadAction<{ id: number; text: string }>) => {
-            const todo = state.todos.find((todo) => todo.id === action.payload.id);
-            if (todo) todo.text = action.payload.text;
+            state.todos = state.todos.map((todo) =>
+                todo.id === action.payload.id ? { ...todo, text: action.payload.text } : todo,
+            );
         },
     },
 });

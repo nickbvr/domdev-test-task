@@ -14,7 +14,7 @@ const CreateForm: FC = () => {
     };
 
     const handleClick = () => {
-        value.trim() && dispatch(addTodo(value.trim()));
+        value.trim() && dispatch(addTodo({ value: value.trim() }));
         setValue('');
     };
 

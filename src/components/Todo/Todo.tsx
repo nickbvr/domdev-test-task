@@ -28,12 +28,12 @@ const Todo: FC<Itodo> = ({ id, text, completed }) => {
         setEditMode(!editMode);
     };
 
-    const handleToggle: ChangeEventHandler<HTMLInputElement> = (e) => {
-        dispatch(toggleComplete({ id, completed: e.target.checked }));
+    const handleToggle: ChangeEventHandler<HTMLInputElement> = () => {
+        dispatch(toggleComplete({ id }));
     };
 
     const handleRemove = () => {
-        dispatch(removeTodo(id));
+        dispatch(removeTodo({ id }));
     };
 
     const handleKeySubmit: KeyboardEventHandler<HTMLInputElement> = (e) => {
