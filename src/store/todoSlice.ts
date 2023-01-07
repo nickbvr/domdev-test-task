@@ -15,27 +15,28 @@ export const todoSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action: PayloadAction<{ value: string }>) => {
-            state.todos = [
-                ...state.todos,
-                {
-                    id: Date.now(),
-                    text: action.payload.value,
-                    completed: false,
-                },
-            ];
+            const todo = {
+                id: Date.now(),
+                text: action.payload.value,
+                completed: false,
+            };
+            return { ...state, todos: [...state.todos, todo] };
         },
         removeTodo: (state, action: PayloadAction<{ id: number }>) => {
-            state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
+            const result = state.todos.filter((todo) => todo.id !== action.payload.id);
+            return { ...state, todos: result };
         },
         toggleComplete: (state, action: PayloadAction<{ id: number }>) => {
-            state.todos = state.todos.map((todo) =>
+            const result = state.todos.map((todo) =>
                 todo.id === action.payload.id ? { ...todo, completed: !todo.completed } : todo,
             );
+            return { ...state, todos: result };
         },
         updateTodo: (state, action: PayloadAction<{ id: number; text: string }>) => {
-            state.todos = state.todos.map((todo) =>
+            const result = state.todos.map((todo) =>
                 todo.id === action.payload.id ? { ...todo, text: action.payload.text } : todo,
             );
+            return { ...state, todos: result };
         },
     },
 });
